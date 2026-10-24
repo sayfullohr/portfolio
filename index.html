@@ -1,0 +1,865 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sayfulloh | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: #f8fafc;
+  color: #111827;
+  overflow-x: hidden;
+}
+
+body.loading {
+  overflow: hidden;
+}
+
+/* LOADING SCREEN */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at center, #eeeeff, #f8fafc 65%);
+  transition: opacity .7s ease, visibility .7s ease;
+}
+
+#loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loader-content {
+  width: min(330px, 85%);
+  text-align: center;
+  animation: enter .8s ease both;
+}
+
+.logo {
+  position: relative;
+  width: 85px;
+  height: 85px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 26px;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #5b5cf0, #0ea5e9);
+  box-shadow: 0 15px 45px #5b5cf044;
+  animation: float 1.5s ease-in-out infinite alternate;
+}
+
+.logo::before {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border: 2px solid transparent;
+  border-top-color: #5b5cf0;
+  border-right-color: #0ea5e9;
+  border-radius: 30px;
+  animation: spin 1.2s linear infinite;
+}
+
+.logo span {
+  color: white;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.loader-content h2 {
+  font-size: 27px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.loader-content h2 span {
+  color: #5b5cf0;
+}
+
+.loader-content p {
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.track {
+  height: 4px;
+  margin-top: 30px;
+  background: #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.track-inner {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #5b5cf0, #0ea5e9);
+  animation: progress 3s ease forwards;
+}
+
+.loader-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  color: #94a3b8;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.loader-bottom span:last-child {
+  color: #5b5cf0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to { transform: translateY(-7px); }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes progress {
+  to { width: 100%; }
+}
+
+/* NAVBAR */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 8%;
+  background: #ffffffdd;
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.brand {
+  font-size: 23px;
+  font-weight: 800;
+  text-decoration: none;
+  color: #111827;
+}
+
+.brand span { color: #5b5cf0; }
+
+nav a {
+  text-decoration: none;
+  color: #64748b;
+  font-size: 13px;
+  transition: color .3s;
+}
+
+nav a:hover { color: #5b5cf0; }
+
+/* HERO */
+.hero {
+  min-height: 85vh;
+  width: min(1100px, 88%);
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items: center;
+  gap: 40px;
+  padding: 70px 0;
+}
+
+.hero-content {
+  animation: enter .9s .1s both;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 13px;
+  background: #dcfce7;
+  color: #15803d;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px #bbf7d0;
+}
+
+h1 {
+  font-size: clamp(44px, 7vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -4px;
+  margin-bottom: 23px;
+}
+
+.gradient {
+  background: linear-gradient(100deg, #5b5cf0, #0ea5e9, #8b5cf6);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: gradient 5s linear infinite;
+}
+
+@keyframes gradient {
+  to { background-position: 200% center; }
+}
+
+.description {
+  max-width: 520px;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 13px 17px;
+  border-radius: 12px;
+  background: #5b5cf0;
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 800;
+  border: 1px solid transparent;
+  transition: .3s;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px #5b5cf044;
+}
+
+.btn.secondary {
+  background: white;
+  color: #111827;
+  border-color: #e5e7eb;
+}
+
+.btn.dark {
+  background: #111827;
+}
+
+/* PROFILE CARD */
+.visual {
+  min-height: 400px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  perspective: 1000px;
+  animation: enter 1s .3s both;
+}
+
+.orbit {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border: 1px solid #5b5cf033;
+  border-radius: 50%;
+  animation: spin 25s linear infinite;
+}
+
+.orbit::after {
+  content: "";
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #5b5cf0;
+  box-shadow: 0 0 25px #5b5cf0;
+}
+
+.orbit.two {
+  width: 390px;
+  height: 390px;
+  border-color: #0ea5e922;
+  animation-direction: reverse;
+}
+
+.profile {
+  position: relative;
+  z-index: 2;
+  width: min(310px, 90%);
+  padding: 35px 20px;
+  text-align: center;
+  border: 1px solid white;
+  border-radius: 27px;
+  background: #ffffffdc;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 25px 70px #312e811c;
+  transform-style: preserve-3d;
+  animation: float 4s ease-in-out infinite alternate;
+  transition: box-shadow .3s;
+}
+
+.profile:hover {
+  box-shadow: 0 30px 80px #5b5cf044;
+}
+
+.avatar {
+  width: 95px;
+  height: 95px;
+  margin: 0 auto 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #5b5cf0, #0ea5e9);
+  color: white;
+  font-size: 32px;
+  font-weight: 800;
+  box-shadow: 0 12px 35px #5b5cf044;
+}
+
+.profile h2 { font-size: 21px; }
+.profile p { color: #64748b; font-size: 12px; margin: 8px 0 18px; }
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+}
+
+.tags span {
+  background: #eeeeff;
+  color: #5b5cf0;
+  padding: 6px 9px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.chip {
+  position: absolute;
+  padding: 11px 13px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 10px 35px #11182712;
+  font-size: 12px;
+  font-weight: 800;
+  animation: float 3s ease-in-out infinite alternate;
+}
+
+.chip.one { top: 35px; right: 0; }
+.chip.two { bottom: 35px; left: 0; animation-delay: .8s; }
+
+/* SECTIONS */
+section.content {
+  padding: 70px 6%;
+}
+
+.section-heading {
+  text-align: center;
+  margin: 0 auto 35px;
+}
+
+.section-heading small {
+  color: #5b5cf0;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  font-size: clamp(29px, 4vw, 42px);
+  letter-spacing: -1px;
+  margin: 10px 0;
+}
+
+.section-heading p {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.skills {
+  width: min(1000px, 100%);
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.skill {
+  background: white;
+  border: 1px solid #e5e7eb;
+  padding: 24px 18px;
+  border-radius: 18px;
+  transition: .35s;
+}
+
+.skill:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 20px 50px #11182710;
+  border-color: #a5b4fc;
+}
+
+.skill-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #eeeeff;
+  color: #5b5cf0;
+  font-weight: 800;
+  margin-bottom: 14px;
+  transition: .3s;
+}
+
+.skill:hover .skill-icon {
+  transform: rotate(-8deg) scale(1.1);
+}
+
+.skill h3 { font-size: 15px; }
+.skill p { font-size: 11px; color: #64748b; margin-top: 6px; }
+
+/* PROJECT */
+.project {
+  width: min(1000px, 100%);
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  padding: 30px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 25px;
+  box-shadow: 0 20px 60px #1118270a;
+}
+
+.project-info h3 {
+  font-size: 28px;
+  margin: 12px 0;
+}
+
+.project-info p {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.project-label {
+  display: inline-block;
+  background: #eeeeff;
+  color: #5b5cf0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.project-info ul {
+  list-style: none;
+  margin: 15px 0;
+  font-size: 12px;
+}
+
+.project-info li { margin: 9px 0; }
+.project-info li::before { content: "✓"; color: #16a34a; margin-right: 9px; font-weight: 800; }
+
+.preview {
+  min-height: 280px;
+  padding: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: radial-gradient(circle, #eeeeff, #f8fafc 70%);
+  overflow: hidden;
+}
+
+.dashboard {
+  width: 100%;
+  max-width: 350px;
+  padding: 18px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  box-shadow: 0 20px 50px #11182715;
+  transition: transform .4s;
+  transform: perspective(800px) rotateY(-6deg);
+}
+
+.preview:hover .dashboard {
+  transform: perspective(800px) rotateY(0) translateY(-5px);
+}
+
+.dashboard h4 { font-size: 13px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+.stat { padding: 12px; border: 1px solid #eee; border-radius: 10px; }
+.stat small { color: #94a3b8; font-size: 10px; }
+.stat strong { display: block; margin-top: 5px; font-size: 15px; }
+
+.customer {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-top: 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+  font-size: 10px;
+}
+
+/* CONTACT */
+.contact-panel {
+  width: min(1000px, 100%);
+  margin: auto;
+  padding: 40px;
+  border-radius: 25px;
+  color: white;
+  background: linear-gradient(135deg, #17172e, #30316a);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  overflow: hidden;
+}
+
+.contact-panel h2 { font-size: clamp(27px, 4vw, 39px); margin-bottom: 10px; }
+.contact-panel p { color: #c7c9e5; font-size: 13px; max-width: 550px; line-height: 1.9; }
+.contact-panel .btn { background: white; color: #202044; flex-shrink: 0; }
+
+.contact-details {
+  width: min(1000px, 100%);
+  margin: 20px auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+}
+
+.contact-item {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  padding: 17px;
+  transition: .3s;
+  overflow-wrap: anywhere;
+}
+
+.contact-item:hover { transform: translateY(-5px); border-color: #a5b4fc; }
+.contact-item small { color: #64748b; display: block; margin-bottom: 5px; }
+.contact-item strong { font-size: 12px; }
+
+footer {
+  padding: 25px 6%;
+  margin-top: 35px;
+  border-top: 1px solid #e5e7eb;
+  color: #64748b;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(25px);
+  filter: blur(3px);
+  transition: opacity .7s, transform .7s, filter .7s;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@media(max-width:850px) {
+  .hero { grid-template-columns: 1fr; text-align: center; }
+  .description { margin: auto; }
+  .buttons { justify-content: center; }
+  .visual { min-height: 380px; }
+  .skills { grid-template-columns: repeat(2, 1fr); }
+  .project { grid-template-columns: 1fr; }
+  .contact-details { grid-template-columns: repeat(2, 1fr); }
+  .contact-panel { flex-direction: column; align-items: flex-start; }
+}
+
+@media(max-width:480px) {
+  nav { padding: 16px 5%; }
+  nav > div { display: none; }
+  h1 { letter-spacing: -2px; }
+  .orbit { width: 260px; height: 260px; }
+  .orbit.two { width: 330px; height: 330px; }
+  .skills { gap: 10px; }
+  .skill { padding: 17px 13px; }
+  .project { padding: 18px; }
+  .contact-panel { padding: 25px; }
+  .contact-details { grid-template-columns: 1fr; }
+}
+
+@media(prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body class="loading">
+
+<!-- LOADING -->
+<div id="loader">
+  <div class="loader-content">
+    <div class="logo"><span>SZ</span></div>
+    <h2>Sayfulloh<span>.</span></h2>
+    <p>Frontend React Developer</p>
+    <div class="track"><div class="track-inner"></div></div>
+    <div class="loader-bottom">
+      <span>LOADING PORTFOLIO</span>
+      <span>100%</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#home" class="brand">Sayfulloh<span>.</span></a>
+  <div>
+    <a href="#home">Bosh sahifa</a>&nbsp;&nbsp;&nbsp;
+    <a href="#skills">Texnologiyalar</a>&nbsp;&nbsp;&nbsp;
+    <a href="#projects">Loyihalar</a>&nbsp;&nbsp;&nbsp;
+    <a href="#contact">Bog‘lanish</a>
+  </div>
+</nav>
+
+<main>
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="status"><span class="dot"></span> Frontend Development</div>
+    <h1>Sayfulloh<br><span class="gradient">Zokirov</span></h1>
+    <p class="description">
+      Frontend React Developer. Zamonaviy, chiroyli va moslashuvchan
+      web interfeyslar yaratishga qiziqaman. HTML, CSS, JavaScript va
+      React bilan ishlayman.
+    </p>
+
+    <div class="buttons">
+      <a href="#projects" class="btn">Loyihalarimni ko‘rish ↗</a>
+      <a href="#contact" class="btn secondary">Bog‘lanish</a>
+      <a href="./Resumes3.docx" class="btn dark" download="Sayfulloh_Zokirov_CV.docx">↓ CV yuklab olish</a>
+    </div>
+  </div>
+
+  <div class="visual" id="visual">
+    <div class="orbit"></div>
+    <div class="orbit two"></div>
+    <div class="chip one">⚛ React.js</div>
+    <div class="chip two">✦ Frontend Developer</div>
+    <div class="profile" id="profile">
+      <div class="avatar">SZ</div>
+      <h2>Sayfulloh Zokirov</h2>
+      <p>Frontend React Developer</p>
+      <div class="tags">
+        <span>React</span><span>JavaScript</span><span>Next.js</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="content" id="skills">
+  <div class="section-heading reveal">
+    <small>TECH STACK</small>
+    <h2>Texnologiyalar</h2>
+    <p>Frontend ishlab chiqishda foydalanadigan texnologiyalarim.</p>
+  </div>
+
+  <div class="skills">
+    <article class="skill reveal"><div class="skill-icon">HTML</div><h3>HTML5</h3><p>Web sahifalar tuzilishi</p></article>
+    <article class="skill reveal"><div class="skill-icon">CSS</div><h3>CSS3</h3><p>Dizayn va animatsiyalar</p></article>
+    <article class="skill reveal"><div class="skill-icon">JS</div><h3>JavaScript</h3><p>Interaktiv imkoniyatlar</p></article>
+    <article class="skill reveal"><div class="skill-icon">⚛</div><h3>React.js</h3><p>Komponentlar asosida web ilovalar</p></article>
+    <article class="skill reveal"><div class="skill-icon">N</div><h3>Next.js</h3><p>React framework</p></article>
+    <article class="skill reveal"><div class="skill-icon">TW</div><h3>Tailwind CSS</h3><p>Tezkor UI dizayn</p></article>
+    <article class="skill reveal"><div class="skill-icon">UI</div><h3>Material UI</h3><p>UI komponentlari</p></article>
+    <article class="skill reveal"><div class="skill-icon">A</div><h3>Ant Design</h3><p>Interfeys komponentlari</p></article>
+  </div>
+</section>
+
+<section class="content" id="projects">
+  <div class="section-heading reveal">
+    <small>SELECTED WORK</small>
+    <h2>Loyiham</h2>
+    <p>Amaliy muammoni hal qilishga yo‘naltirilgan web loyiha.</p>
+  </div>
+
+  <article class="project reveal">
+    <div class="project-info">
+      <span class="project-label">WEB APPLICATION</span>
+      <h3>M’Dokon CRM</h3>
+      <p>
+        Do‘konlar uchun savdo, mijozlar qarzi va pul oqimini hisobga
+        olish jarayonlarini raqamlashtirishga qaratilgan web loyiha.
+      </p>
+      <ul>
+        <li>Savdo va qarzdorlikni boshqarish</li>
+        <li>Do‘kon hisobini raqamlashtirish</li>
+        <li>Web interfeys orqali foydalanish</li>
+      </ul>
+      <a class="btn" href="https://mdokon-sand.vercel.app/" target="_blank" rel="noopener noreferrer">Loyihani ochish ↗</a>
+    </div>
+
+    <div class="preview">
+      <div class="dashboard">
+        <h4>▦ M’Dokon CRM</h4>
+        <div class="stats">
+          <div class="stat"><small>Bugungi savdo</small><strong>1 250 000</strong></div>
+          <div class="stat"><small>Jami qarz</small><strong>480 000</strong></div>
+        </div>
+        <div class="customer"><span>Ali Valiyev</span><strong>150 000</strong></div>
+        <div class="customer"><span>Malika Karimova</span><strong>80 000</strong></div>
+        <div class="customer"><span>Javohir Akbarov</span><strong>250 000</strong></div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="content" id="contact">
+  <div class="contact-panel reveal">
+    <div>
+      <h2>Yangi imkoniyatlarga tayyorman.</h2>
+      <p>Frontend Developer sifatida yangi loyihalar, jamoaviy hamkorlik va professional rivojlanishga qiziqaman.</p>
+    </div>
+    <a class="btn" href="https://t.me/zokirov_sayfulloh" target="_blank" rel="noopener noreferrer">Men bilan bog‘lanish ↗</a>
+  </div>
+
+  <div class="contact-details reveal">
+    <a class="contact-item" href="tel:+998330911643"><small>Telefon</small><strong>+998 (33) 091 16 43</strong></a>
+    <a class="contact-item" href="https://github.com/sayfullohr" target="_blank" rel="noopener noreferrer"><small>GitHub</small><strong>github.com/sayfullohr ↗</strong></a>
+    <a class="contact-item" href="https://t.me/zokirov_sayfulloh" target="_blank" rel="noopener noreferrer"><small>Telegram</small><strong>@zokirov_sayfulloh ↗</strong></a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> Sayfulloh Zokirov</span>
+  <span>Frontend React Developer</span>
+  <a href="#home" style="color:#5b5cf0;text-decoration:none">Yuqoriga ↑</a>
+</footer>
+
+<script>
+/* Loading: kamida 3 soniya */
+(() => {
+  const loader = document.getElementById("loader");
+  const start = Date.now();
+  let hidden = false;
+
+  function hideLoader() {
+    if (hidden) return;
+    hidden = true;
+
+    const remaining = Math.max(0, 3000 - (Date.now() - start));
+
+    setTimeout(() => {
+      loader.classList.add("hidden");
+      document.body.classList.remove("loading");
+
+      setTimeout(() => loader.remove(), 800);
+    }, remaining);
+  }
+
+  if (document.readyState === "complete") {
+    hideLoader();
+  } else {
+    window.addEventListener("load", hideLoader, { once: true });
+  }
+
+  // Sahifa uzoq yuklansa ham loading qolib ketmasin.
+  setTimeout(hideLoader, 5000);
+})();
+
+/* Scroll animatsiyasi */
+const items = document.querySelectorAll(".reveal");
+
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  items.forEach((item, index) => {
+    item.style.transitionDelay = (index % 4) * 70 + "ms";
+    observer.observe(item);
+  });
+} else {
+  items.forEach(item => item.classList.add("visible"));
+}
+
+/* Profilga 3D sichqoncha effekti */
+const profile = document.getElementById("profile");
+const visual = document.getElementById("visual");
+
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  visual.addEventListener("mousemove", event => {
+    const rect = profile.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+    profile.style.animation = "none";
+    profile.style.transform =
+      `perspective(900px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`;
+  });
+
+  visual.addEventListener("mouseleave", () => {
+    profile.style.transform = "";
+    profile.style.animation = "";
+  });
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
